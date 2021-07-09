@@ -9,6 +9,7 @@
 \usepackage{xcolor}
 \usepackage{multirow}
 \usepackage{float}
+\usepackage{subfig}
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \begin{document}
@@ -41,7 +42,7 @@
 \maketitle
 
 \begin{abstract}
-To identify a person is the most used and studied application of biometrics. In this context, many studies reported different biometric types and personal characteristics. Aiming to improve user identification performance, some authors explored combination methods on different biometric modalities, presenting positive results. Recently, some authors started studying the prediction of information like gender and emotional state from different biometric traits. However, most studies found in the literature investigated each biometric modality individually. Inspired by the positive results of combination methods for user identification, this paper investigated the impact of two combination methods (data fusion and decision fusion) on the prediction of emotional states from keystroke and handwriting behavioral biometrics, achieving positive results.
+User identification is one of the most used and studied application in biometrics. In this context, many studies reported different biometric types and personal characteristics. Aiming to improve user identification performance, some authors explored combination methods on different biometric modalities, presenting positive results. Recently, some authors started studying the prediction of information like gender and emotional state from different biometric traits. However, most studies found in the literature investigated each biometric modality individually. Inspired by the positive results of combination methods for user identification, this paper investigated the impact of two combination methods (data fusion and decision fusion) on the prediction of emotional states from keystroke and handwriting behavioral biometrics, achieving positive results.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -50,18 +51,19 @@ soft biometrics, hand-oriented biometric modalities,  emotional state prediction
 
 \section{Introduction}
 
-The most widely known use of biometric data is related to user identification, mainly in user-authentication systems. In this context, iris, fingerprint, face, and signature are among the most used modalities. Regard the data type biometric traits are divided into two. The first type, hard biometrics, is defined as characteristics containing information that is exclusive to a specific person. Fingerprints and iris are both examples of hard biometrics. The second type, soft biometrics, concerns to characteristics that belong to a person but are not unique to the. Some examples of soft biometrics are hair color, gender, emotional state, and others \cite{handbook-multibiometrics,marjory-emotion1}. 
+The most widely known use of biometric data is related to user identification, mainly in user-authentication systems. In this context, iris, fingerprint, face, and signature are among the most used modalities. One of the main reasons is the fact of these modalities be able to identify a person uniquely. This type of biometric data is called hard biometrics. On the other hand, characteristics that belong to a person but are not unique to them, are called soft biometrics, another biometric data type. Some examples of soft biometrics are hair color, gender, emotional state, and others \cite{handbook-multibiometrics,marjory-emotion1}. 
 
-Biometrics are also divided into three groups: physiologic, chemical, and behavioral \cite{handbook-biometrics}. Physiologic biometrics are related to physiological characteristics as the face, DNA, and fingerprint. On the other hand, behavioral biometrics regard to behavior patterns developed by a person as typing rhythm, voice, and writing. Finally, chemical biometrics are related to measuring chemical cues of a user, like the chemical composition of human perspiration \cite{chemical-biometric-example}. 
+According to \cite{handbook-biometrics}, biometrics is defined as ``the science of establishing the identity of an individual based on the physical, chemical or behavioral attributes of the person''.
+Physiologic biometrics are related to physiological characteristics as the face, DNA, and fingerprint. On the other hand, behavioral biometrics regard to behavior patterns developed by a person as typing rhythm, voice, and writing. Finally, chemical biometrics are related to measuring chemical cues of a user, like the chemical composition of human perspiration \cite{chemical-biometric-example}. 
 
-Over the years, many studies have explored soft biometrics data as a helping tool for user identification-based tasks. As an example, it was reported in \cite{continuous-auth} the use of soft biometrics as an extra identification step, after the default password authentication. 
+As mentioned, the use of hard biometrics for user identification-based tasks is a well-founded field. Additionally, different studies explored physiological and behavioral modalities for this objective. Posteriorly,  researchers started to explore soft biometrics data, but initially as a helping tool for user identification. As an example, the authors in \cite{continuous-auth} reported the use of soft biometrics as an extra identification step, after default password authentication. 
 However, the soft biometrics potential goes beyond a simple auxiliary tool in user identification applications. Hereupon, researchers started to explore different aspects of soft biometrics, using, for instance, biometric modalities to predict gender \cite{hw-gender1, cheng-hw-gender} and emotional states \cite{cheng-emotional, ks-emotion1, cheng-hw-gender}, for example. 
 
-Regarding emotional state prediction, for instance, the literature presents authors reporting the prediction of soft biometric information from different biometric modalities, like keystroke (\cite{ks-emotion1, ks-emotion2-mouse}) and handwriting (\cite{cheng-emotional}). Nevertheless, the majority of the existing studies explored this kind of prediction using the biometric modalities individually.
+In the emotional state prediction field, the literature presents authors reporting different behavioral biometric modalities, like keystroke (\cite{ks-emotion1, ks-emotion2-mouse}) and handwriting (\cite{cheng-emotional}) as training data. Nevertheless, the majority of the existing studies explored this kind of prediction using the biometric modalities individually.
 
-In parallel, led by the goal of improving the potential of biometric-based tasks, several researchers started to investigate the impact of combining data from different biometric modalities \cite{combine} either to user identification or even for soft biometric prediction. As an example, in \cite{marjorie-comb}, the authors reported an enhancement in the performance of user identification by combining keystroke and mouse stroke. Also exploring combination techniques, but aiming at improving gender prediction accuracy, the authors of \cite{combining-gender} reported a positive impact when combining keystroke and handwriting dynamic biometric modalities.
+In parallel, led by the goal of improving the potential of biometric-based tasks, several researchers started to investigate the impact of combining data from different biometric modalities \cite{combine} either to user identification or even for soft biometric prediction. As an example, in \cite{marjorie-comb}, the authors reported an enhancement in the performance of user identification by combining keystroke and mouse stroke. Also exploring combination techniques, but aiming at improving gender prediction accuracy, the authors of \cite{combining-gender} reported a positive impact when combining keystroke and handwriting dynamic behavioral biometric modalities.
 
-In this paper, we propose an initial study to investigate the impact of combine keystroke and handwriting biometrics on emotional state-based prediction tasks. In this sense, the proposed protocol covers different machine learning algorithms and different combination methods to ensure the reliability of the results.
+As presented, predicting soft biometric data like gender and emotional from keystroke and handwriting modalities is a well-investigated field in biometrics. In contrast, no study so far investigated the impact of combining these behavioral biometric modalities to predict emotional states. In this sense, this paper aims at examining the impact of two combination methods (data fusion and decision fusion) applied to keystroke and handwriting biometric modalities to predict emotional states.
 
 Regarding the organization, this work is divided into six sections as follows. Section II describes the research related to the subject of this paper, while a detailed description of the used datasets is illustrated in Section III. The experimental methodology is described in Section IV, followed by the obtained results in Section V. Finally, Section VI presents the final remarks and suggestions for future works. 
 
@@ -97,9 +99,9 @@ However, little effort has been done to apply combined behavioral biometric data
 \section{The Behavioral Bi-modal Dataset: Keystroke and Handwriting Dynamics}
 \label{dataset}
 
-The keystroke and handwriting dynamics necessary data to investigate the impact of its combination for emotional state prediction were collect and reported in \cite{cheng-thesis, cheng-hw-gender, cheng-emotional}. For the elaboration of both biometric datasets, 100 participants perform tasks following a rigorous protocol described in \cite{cheng-thesis}. Each participant performed four tasks for each biometric modality, originating 400 samples on each dataset. Table \ref{tab:tasks} presents a brief description of each task.
+The keystroke and handwriting dynamics datasets used in this paper were collect and reported in \cite{cheng-thesis, cheng-hw-gender, cheng-emotional}. For the elaboration of both biometric datasets, 100 participants executed tasks following a rigorous protocol described in \cite{cheng-thesis}. Each participant completed four tasks for each biometric modality, originating 400 samples on each dataset. Table \ref{tab:tasks} presents a brief description of each task.
 
-Regarding the gathering of emotional state data, during the tasks, images, and videos with positive and less positive content were presented to all participants to lead them to a specific emotion. Additionally, this paper uses two emotional states, ``happy'' and ``relaxed''. Finally, keystroke and handwriting information were collected in only one capture session to avoid differences between sessions.
+Concerning the gathering of emotional state data, during the tasks, images, and videos with positive and less positive content were presented to all participants to lead them to a specific emotion. This paper uses two emotional states, ``happy'' and ``relaxed''. Finally, keystroke and handwriting information were collected in only one capture session to avoid differences between sessions.
 
 \begin{table}[htbp]
     \centering
@@ -121,22 +123,22 @@ Regarding the gathering of emotional state data, during the tasks, images, and v
 \end{table}
 
 
-The keystroke dataset, in turn, contains 29 features, being these composed from the keyboard keys pressing and releasing events along with the timestamp of each.
+The keystroke dataset, contains 29 features, being these composed from the keyboard keys pressing and releasing events along with the timestamp of each.
 This collected data passes by a processing step to extract the features. Some features examples are the duration of a complete pressing and releasing event, the mean duration of digraphs and tri-graphs typing, the duration of only the first key in digraphs, and tri-graphs, among others.
 
-Regarding handwriting, two datasets are generated from the reported in \cite{cheng-thesis}. The first, called here version 1, contains 24 dynamic features (collected by the hardware) and 25 static features (extracted from the writing image), summing 49 features. The second, called here version 2, contains only the 24 dynamic features.
+Regarding handwriting, two datasets are generated from the original reported in \cite{cheng-thesis}. The first, called here version 1, contains 24 dynamic features (collected by the hardware) and 25 static features (extracted from the writing image), summing 49 features. The second, called here version 2, contains only the 24 dynamic features.
 These features are composed of calculation over timestamp, X and Y coordinates, normal and tangential pressure, status, cursor, context, azimuth, altitude, twist, pitch, roll, and yaw information saved during capture. Some examples of used handwriting features are vertical centralness, speed in X and Y axes, and others.
 
 
 \section{Experimental Methodology}
 
 This section has as a focus describe the adopted methodology for the empirical tests. First, the necessary pre-processing techniques will be 
-presented, followed by the proposed combination approaches and ending with the training and testing protocol. 
+presented, followed by the proposed combination approaches, used machine learning classifiers, and ending with the training and testing protocol. 
 
 \subsection{Datasets Pre-processing}
 
-The ``happy'' and ``relaxed'' emotional states used on tests were collected using a Likert Scale \cite{likert}. The original values ranging from 1 to 10 and represent the level of ``happy'' and ``relaxed''  informed by the participant while performed the keystroke and handwriting tasks. Additionally,  those values the classes that should be predicted by machine learning algorithms.
-However, due to the low number of instances in the dataset (400), a range of 10 possible classes causes a severe imbalance in the given dataset distribution. The chosen solution to this problem is to reduce the number of target classes to two, through a binarization process in which each emotional state value will be re-assigned to``happy'' and ``not happy'' as well as ``relaxed'' and ``not relaxed''. 
+The ``happy'' and ``relaxed'' emotional states used on tests were collected using a Likert Scale \cite{likert}. The original values ranging from 1 to 10 and represent the level of ``happy'' and ``relaxed''  informed by the participant while performed the keystroke and handwriting tasks. These ten values are also the classes to be predicted by machine learning algorithms.
+However, due to the low number of instances in the dataset (400), a range of 10 possible classes causes a severe class distribution imbalance. The chosen solution to this problem is to reduce the number of target classes to two, through a binarization process in which each emotional state value will be re-assigned to``happy'' and ``not happy'' as well as ``relaxed'' and ``not relaxed''. 
 
 A similar approach was used by \cite{cheng-thesis} to reduce the number of classes. In there, a threshold value of eight was chosen for the binarization process, for both ``happy'' and ``relaxed'' emotional states. In this case, all instances with emotional states value equal to eight were discarded from the original dataset; instances with emotion values of 9 and 10 were assigned to ``happy'' and ``relaxed'', and the remaining instances were assigned to ``not happy'' and ``not relaxed''.
 
@@ -167,22 +169,23 @@ The selected values to test were the integer interval from six to nine since num
 
 
 
-Once the threshold value was defined, the target classes must be defined to be the same in both modalities (keystroke and handwriting), this process is called here merging labels. However, there are some cases in which keystroke and handwriting classes are different for the same task. For instance, a user, performing the same task can be assigned ``happy'' for keystroke and ``not happy'' for handwriting.
+Once the threshold value was defined, the target classes must be re-assigned to be the same in both modalities (keystroke and handwriting), this process is called here merging labels. However, there are some cases in which keystroke and handwriting classes are different for the same task. For instance, a user, performing the same task can be assigned ``happy'' for keystroke and ``not happy'' for handwriting.
 To solve this problem, a $k$-NN classifier, with $k = 1$, is trained for each modality (keystroke and handwriting), using the whole dataset. After that, the trained classifier is used to predict the probabilities for each class on both biometric modalities. Finally, the biometric modality that presents the highest class probability will determine the target class for both, keystroke, and handwriting.  
 
 
 \subsection{The Proposed Approaches}
 
-To better determine the impact of the combination in a multi-modal-based emotional state prediction system, evaluate different approaches is necessary to ensure the results. In this context, two combination approaches are analyzed in this paper, data fusion and decision fusion. 
+To better determine the combination impact in a multi-modal-based emotional state prediction system, to evaluate different approaches is necessary to ensure the confidence of the results. In this context, this paper analyzes two combination approaches, data fusion, and decision fusion. 
 The data fusion approach (first approach) consists of joining keystroke and handwriting datasets side by side into a combined dataset. Besides, this combined dataset is delivered to the classification algorithms for training and testing. The main aim of this approach is to investigate whether the use of data originated from both modalities can have a positive effect on the performance of an emotional state prediction. 
 
 The decision fusion approach (second approach) consists of training different classifiers for each biometric modality and combine the predictions of each one to generate the final result. 
 For this method, the testing phase consists of using the trained models of each biometric modality to predict all datasets instances and fuse the predicting probabilities to generates a final result. The probabilities fusion consists of a simple sum, and the highest summed probability represents the predicted class.
 
-The decision approach is further divided into two different parts. On the first one, only one classifier is used for each modality, keystroke, and handwriting, making a total of two classifiers and using the combination technique described above. 
+The decision approach is further divided into two different parts. In the first part, only one classifier is used for each modality, keystroke, and handwriting, making a total of two classifiers and using the combination technique described above. 
 On the other hand, the second part uses a classifier ensemble containing five, ten, and 20 base classifiers being those fed with data of each biometric modality. In these cases, the overall ensemble classifiers have 10, 20 40 base classifiers, respectively. Additionally, to promote diversity in the classifier ensembles, a feature selection procedure was performed, in which each base classifier has a subset of features randomly selected and keeping a percentage between 70\% and 90\% of the original \cite{dietterich-ensemble}. 
 
-Table \ref{tab:approaches} presents the description of all experimental scenarios along with the abbreviations used over the results section. The first table line is related to the data fusion approach, the second line in regard to the first part of the decision fusion approach, and lines three, four, and five present different experimental scenarios of the second part of the decision fusion approach.
+Table \ref{tab:approaches} presents the description of all experimental scenarios along with the abbreviations used over the results section. The first table line is related to the data fusion approach, the second line concerning the first part of the decision fusion approach, and lines three, four, and five present different experimental scenarios of the second part of the decision fusion approach.
+Figure \ref{fig:combination} provides a visual representation for the proposed combination methods.
 
 \begin{table}[H]
     \centering
@@ -200,28 +203,41 @@ Table \ref{tab:approaches} presents the description of all experimental scenario
 \end{table}
 
 
+\begin{figure}%
+    \centering
+    \subfloat[]{{\includegraphics[scale=0.18]{images/first_approach.png} }}%
+    \qquad
+    \subfloat[]{{\includegraphics[scale=0.15]{images/second_approach_1.png} }}%
+    \qquad
+    \subfloat[]{{\includegraphics[scale=0.15]{images/second_approach_2.png} }}%
+    \caption{Propsed combinatio methods, data fusion (a), decision fusion part 1 (b) and decision fusion part 2 (c)}%
+    \label{fig:combination}%
+\end{figure}
+
+
+
 \subsection{Classification Methods}
 
 In order to evaluate the proposed approaches, four different machine learning classification algorithms were selected, those classifiers are: $k$-Nearest Neighbours ($k$-NN) \cite{knn}; Multi-Layer Perceptron (MLP) \cite{mlp}; Decision Tree (DT) \cite{dt}; and Support Vector Machine (SVM) \cite{svm}. Additionally, the implementation used over the tests is from the Scikit-learn library \cite{sklearn}, using the following parameters.
 
 For the parameters not cited above, was used the default values provided by the Scikit-learn \cite{sklearn}. Besides, all the performed tests used the same configuration.
 
-For ``rappy'' emotional state:
+For ``happy'' emotional state:
 
 \begin{itemize}
     \item KNeighborsClassifier(n\_neighbors=6);
-    \item MLPClassifier(hidden\_layer\_sizes=(80,), max\_iter=25000);
+    \item MLPClassifier(\\hidden\_layer\_sizes=(80,), max\_iter=25000);
     \item DecisionTreeClassifier(criterion=`entropy'); and
-    \item SVC(C=1.0, kernel=`linear', probability=True, gamma=`auto').
+    \item SVC(C=1.0, kernel=`linear', \\probability=True, gamma=`auto').
 \end{itemize}
 
 For ``relaxed'' emotional state:
 
 \begin{itemize}
     \item KNeighborsClassifier(n\_neighbors=3);
-    \item MLPClassifier(hidden\_layer\_sizes=(30, 30), max\_iter=5000);
+    \item MLPClassifier(\\hidden\_layer\_sizes=(30, 30), max\_iter=5000);
     \item DecisionTreeClassifier(criterion=`entropy'); and
-    \item SVC(C=1.0, kernel=`linear', probability=True, gamma=`auto').
+    \item SVC(C=1.0, kernel=`linear', \\probability=True, gamma=`auto').
 \end{itemize}
 
 For the parameters not cited above, was used the default values provided by the Scikit-learn \cite{sklearn}. Besides, all the performed tests used the same configuration.
@@ -390,7 +406,7 @@ This paper presented the results of an initial investigation of how the keystrok
 
 After analyzing the results on ``happy''  and ``relaxed'' emotional states, it is possible to state that combining keystroke and handwriting behavioral modalities generates a substantially positive impact on its prediction accuracy.
 Additionally, the statistical tests proved that at least one combination approach outperforms the accuracy delivered by the individual modalities.
-Being that said, the results presented in this paper bring a real contribution to the biometrics field. Additionally, the results may work as a start point to new researches, especially related to combine behavioral modalities in soft biometrics prediction tasks.
+Being that said, the results presented in this paper bring a real contribution to the biometrics field. The results may also work as a start point to new researches, especially related to combining behavioral modalities in soft biometrics prediction tasks.
 
 As future works, we intend to explore the impact of dimensionality reduction methods in this task as well as the use of more classifier algorithms. For the second part of the decision fusion approach, we plan to study the use of more complex and elaborated feature selection methods. Besides, the indications of a potential superiority of dynamic handwriting features will be deepen explored.
 Finally, we plan to create a new dataset containing more information and more biometric modalities.
